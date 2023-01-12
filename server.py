@@ -44,7 +44,7 @@ def fortune():
 @app.route('/weather.json')
 def weather():
     """Return a weather-info dictionary for this zipcode."""
-
+    # getting the zipcode out of the dictionary
     zipcode = request.args.get('zipcode')
     weather_info = WEATHER.get(zipcode, DEFAULT_WEATHER)
     return jsonify(weather_info)
@@ -67,6 +67,7 @@ def order_melons():
         result_text = "You want to buy fewer than 1 melons? Huh?"
 
     return jsonify({'code': result_code, 'msg': result_text})
+
 
 
 if __name__ == "__main__":

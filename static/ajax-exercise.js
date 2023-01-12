@@ -22,18 +22,22 @@ function showWeather(evt) {
   const zipcode = document.querySelector('#zipcode-field').value;
 
   // TODO: request weather with that URL and show the forecast in #weather-info
-
-  fetch(url)
+  fetch(`/weather.json?zipcode=${zipcode}`)
+  // fetch(url)
     .then((response) => response.json())
-    .then((responseJson) => {
-      document.querySelector('#weather-info').innerHTML = responseJson.forecast;
+    .then((jsonData) => {
+      document.querySelector('#weather-info').innerHTML = jsonData.forecast;
     });
+    // .then((responseJson) => {
+    //   document.querySelector('#weather-info').innerHTML = responseJson.forecast;
+    // });
 
 }
 
 document.querySelector('#weather-form').addEventListener('submit', showWeather);
 
 // PART 3: ORDER MELONS
+
 
 function orderMelons(evt) {
   evt.preventDefault();
@@ -54,21 +58,32 @@ function orderMelons(evt) {
   })
     .then((response) => response.json())
     .then((responseJSON) => {
-      alert(responseJSON.msg);
+      if (responseJSON.code === "ERROR") {
+        document.querySelector('#order-status').classList.add('order-error');
+      } 
+      document.querySelector('#order-status').innerHTML = `${responseJSON.msg}`;
     });
 
 }
 
   
   // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
-
-// function showError(code) {
-
-//   if (code == "ERROR") {
-//     document.querySelector('#order-status').classList.add(order-error)';
-//     document.querySelector('#order-status').innerHTML = `${msg}`;
-//   }
-// }
-
 document.querySelector('#order-form').addEventListener('submit', orderMelons);
 
+// Further study
+
+function showDog() {
+  fetch('https://dog.ceo/api/breeds/image/random')
+    .then((response) => response.json())
+    .then((responseJSON) => {
+      document.querySelector('#dog-image').setAttribute('#dog-image', responseJSON.message);
+  })
+}
+// {
+//   "status": "success",
+//   "message": "https://images.dog.ceo/breeds/saluki/n02091831_7237.jpg"
+// }
+// https://dog.ceo/api/breeds/image/random
+// }
+
+document.querySelector('#get-dog-image').addEventListener('click', showDog);
